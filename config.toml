@@ -1,4 +1,4 @@
-baseURL = 'https://capstone-pr.netlify.app/'
+baseURL = 'https://capstone.innopolis.university/'
 languageCode = 'en-us'
 title = 'CAPSTONE'
 
@@ -25,7 +25,7 @@ title = 'CAPSTONE'
   # (Optional, default none) Set the path to a logo for the book. If the logo is
   # /static/logo.png then the path would be logo.png
   # BookLogo = 'IU_logo.png'
-  BookLogo = 'YELLOW_BAR.png'
+  BookLogo = 'book_logo.png'
 
   # (Optional, default none) Set leaf bundle to render as side menu
   # When not specified file structure and weights will be used
@@ -38,7 +38,7 @@ title = 'CAPSTONE'
 
   # Set source repository location.
   # Used for 'Last Modified' and 'Edit this page' links.
-  BookRepo = 'https://github.com/TCS-IU/TCS_labs'
+  BookRepo = 'https://github.com/IU-Capstone-Project-2024/reports'
 
   # (Optional, default 'commit') Specifies commit portion of the link to the page's last modified
   # commit hash for 'doc' page type.
@@ -50,7 +50,7 @@ title = 'CAPSTONE'
   # Enable "Edit this page" links for 'doc' page type.
   # Disabled by default. Uncomment to enable. Requires 'BookRepo' param.
   # Edit path must point to root directory of repo.
-  BookEditPath = 'tree/master/'
+  # BookEditPath = 'tree/master/'
 
   # Configure the date format used on the pages
   # - In git information
@@ -66,7 +66,7 @@ title = 'CAPSTONE'
   # By default partals/docs/comments.html includes Disqus template
   # See https://gohugo.io/content-management/comments/#configure-disqus
   # Can be overwritten by same param in page frontmatter
-  BookComments = true
+  BookComments = false
 
   # /!\ This is an experimental feature, might be removed or changed at any time
   # (Optional, experimental, default false) Enables portable links and link checks in markdown pages.
