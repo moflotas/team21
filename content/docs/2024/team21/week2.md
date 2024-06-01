@@ -34,3 +34,8 @@ However, your project can be even better if you would do:
 2) ...
 3) ...  
    {{< /hint >}}
+   
+# Feedback
+{{< hint danger >}}
+This is the test feedback
+{{< /hint >}}
