@@ -1,5 +1,5 @@
-name: Check submission folder structure
-run-name: ${{ github.actor }} is testing checking folder structure
+name: Check report folder structure
+run-name: ${{ github.actor }} is checking folder structure
 on: 
   pull_request: 
     types: [opened, synchronize, reopened, edited]
@@ -18,21 +18,19 @@ jobs:
         env:
           YEAR: "${{ steps.current-time.outputs.year }}"
           REPO_FULL_NAME: ${{ github.event.pull_request.head.repo.full_name }}
-          REPO_NAME: ${repo##*/}
+          REPO_NAME: ${REPO_FULL_NAME##*/}
         id: changed-files-specific
         uses: tj-actions/changed-files@v44
-        with:
-           files_ignore_yaml: |
+        with: 
+          files_ignore_yaml: |
             content:
-              - content/docs/$YEAR/$REPO_NAME/**
+            - content/docs/$YEAR/$REPO_NAME/**
             static:
-              - static/$YEAR/$REPO_NAME/**
+            - static/$YEAR/$REPO_NAME/**
 
       - name: Run step if any file(s) in the disallowed folders changed
-        env:
-          ALL_CHANGED_FILES: ${{ steps.changed-files-specific.outputs.all_changed_files }}
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         uses: actions/github-script@v3
         with:
           script: |
-              core.setFailed('One or more files in disallowed folders has changed: $ALL_CHANGED_FILES')
+              core.setFailed('One or more files in disallowed folders were changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}')
