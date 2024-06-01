@@ -13,17 +13,34 @@ jobs:
         with:
           format: YYYYMMDD-HH
           utcOffset: "+03:00"
-      - name: Use current time
+    
+      # - name: List all changed files
+      #   env:
+      #     ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+      #   run: |
+      #     for file in ${ALL_CHANGED_FILES}; do
+      #       echo "$file was changed"
+      #     done
+      - name: Get changed files in the docs folder
         env:
           YEAR: "${{ steps.current-time.outputs.year }}"
-        run: echo $YEAR
-    
-      - id: files
-        uses: jitterbit/get-changed-files@v1
-      - run: |
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            echo "Do something with this ${changed_file}."
-          done
+          REPO_NAME: ${{ github.event.pull_request.head.repo.full_name }}
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v44
+        with:
+           files_ignore_yaml: |
+            content:
+              - content/docs/$YEAR/$REPO_NAME/**
+            static:
+              - static/$YEAR/$REPO_NAME/**
+
+      - name: Run step if any file(s) in the docs folder change
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files-specific.outputs.all_changed_files }}
+        run: |
+          echo "::error One or more files in the docs folder has changed.\nList all the files that have changed: $ALL_CHANGED_FILES" 
+          exit 1
     
       # - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       # - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
